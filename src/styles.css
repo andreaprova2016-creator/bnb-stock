@@ -1,0 +1,194 @@
+/* Token: colore
+   navy   #2D5F6B  — primario, struttura, testo delle azioni
+   cream  #F5EFE6  — sfondo
+   terra  #C4826A  — riservato agli avvisi (sotto soglia), non decorativo
+   inchiostro #24322F — testo
+   sage   #8FA998  — barra scorte piena
+   bordo  #DCD3C3  — righe/divisori
+   Type: Inter per l'interfaccia, IBM Plex Mono per i numeri di scorta
+   (l'app è un registro di magazzino: i numeri devono leggersi come dati,
+   non come titoli editoriali). Layout: colonna singola, righe a scaffale,
+   niente card arrotondate — l'unità è la riga, come uno scontrino. */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap");
+
+:root {
+  --navy: #2d5f6b;
+  --cream: #f5efe6;
+  --terra: #c4826a;
+  --ink: #24322f;
+  --sage: #8fa998;
+  --border: #dcd3c3;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  padding-bottom: 72px; /* spazio per tabbar */
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 20px 20px 12px;
+  border-bottom: 1px solid var(--border);
+}
+.topbar-mark { font-weight: 600; font-size: 1.05rem; }
+.topbar-property { color: var(--navy); font-size: 0.85rem; }
+
+.app-main { padding: 16px 20px 24px; flex: 1; }
+
+h2 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--navy);
+  margin: 20px 0 10px;
+}
+h2:first-child { margin-top: 0; }
+
+.muted { color: #6b6355; font-size: 0.9rem; line-height: 1.5; }
+
+/* --- soggiorni da confermare --- */
+.pending-block { margin-bottom: 8px; }
+.pending-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  background: var(--terra);
+  color: white;
+  border-radius: 8px;
+  text-decoration: none;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+.pending-row .chevron { font-weight: 600; }
+
+/* --- scaffale prodotti --- */
+.shelf-row {
+  border-bottom: 1px solid var(--border);
+  padding: 12px 2px;
+}
+.shelf-row-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 6px;
+}
+.product-name { font-size: 0.95rem; font-weight: 500; }
+.product-count {
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+.product-count small { font-size: 0.7rem; color: #6b6355; font-weight: 500; }
+
+.stock-bar {
+  height: 4px;
+  background: #e8e0d0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.stock-bar-fill { height: 100%; background: var(--sage); }
+.shelf-row.low .stock-bar-fill { background: var(--terra); }
+
+.shelf-row-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+.shelf-row-controls button {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: white;
+  font-size: 1.1rem;
+  color: var(--navy);
+}
+.low-tag {
+  margin-left: auto;
+  font-size: 0.72rem;
+  color: var(--terra);
+  font-weight: 600;
+}
+
+/* --- form conferma / impostazioni --- */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 14px 0;
+  font-size: 0.85rem;
+}
+.field input, .settings-page select {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: white;
+}
+
+button.primary {
+  background: var(--navy);
+  color: white;
+  border: none;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.feed-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.82rem;
+}
+.feed-url { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #6b6355; }
+.feed-add { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.feed-add input { flex: 1; min-width: 180px; }
+
+/* --- tabbar --- */
+.tabbar {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  background: white;
+  border-top: 1px solid var(--border);
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 14px 0;
+  font-size: 0.78rem;
+  color: #6b6355;
+  text-decoration: none;
+}
+.tab.active { color: var(--navy); font-weight: 600; }
