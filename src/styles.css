@@ -31,6 +31,24 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Filigrana: il simbolo del sole, molto tenue, fisso dietro al contenuto */
+.app-shell {
+  position: relative;
+}
+.app-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("/logo-mark.png");
+  background-repeat: no-repeat;
+  background-position: center 40vh;
+  background-size: 340px auto;
+  opacity: 0.05;
+  pointer-events: none;
+  z-index: 0;
+}
+.topbar, .app-main, .tabbar { position: relative; z-index: 1; }
+
 .app-shell {
   display: flex;
   flex-direction: column;
@@ -43,12 +61,14 @@ body {
 .topbar {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-  padding: 20px 20px 12px;
+  align-items: center;
+  padding: 14px 20px;
   border-bottom: 1px solid var(--border);
 }
 .topbar-mark { font-weight: 600; font-size: 1.05rem; }
-.topbar-property { color: var(--navy); font-size: 0.85rem; }
+.topbar-right { display: flex; align-items: center; gap: 6px; }
+.topbar-logo { height: 20px; width: auto; display: block; opacity: 0.9; }
+.topbar-property { color: var(--navy); font-size: 0.85rem; font-weight: 500; }
 
 .app-main { padding: 16px 20px 24px; flex: 1; }
 
