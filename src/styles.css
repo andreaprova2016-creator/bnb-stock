@@ -39,13 +39,36 @@ body {
   content: "";
   position: fixed;
   inset: 0;
-  background-image: url("/logo.png");
+  background-image: var(--watermark-url, url("/logo.png"));
   background-repeat: no-repeat;
   background-position: center;
   background-size: min(78vw, 460px) auto;
   opacity: 0.05;
   pointer-events: none;
   z-index: 0;
+}
+
+/* --- login / registrazione --- */
+.login-page {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 60px 24px;
+}
+.login-page h1 {
+  font-size: 1.4rem;
+  margin-bottom: 6px;
+}
+.login-page form { margin-top: 20px; }
+.link-button {
+  display: block;
+  width: 100%;
+  text-align: center;
+  background: none;
+  border: none;
+  color: var(--navy);
+  font-size: 0.85rem;
+  margin-top: 14px;
+  text-decoration: underline;
 }
 .topbar, .app-main, .tabbar { position: relative; z-index: 1; }
 
