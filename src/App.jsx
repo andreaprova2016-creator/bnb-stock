@@ -21,6 +21,25 @@ export default function App() {
       .then(({ data }) => setListing(data));
   }, [session]);
 
+  useEffect(() => {
+    if (!listing?.logo_url) return;
+    let link = document.querySelector('link[rel="apple-touch-icon"]');
+    if (!link) {
+      link = document.createElement("link");
+      link.rel = "apple-touch-icon";
+      document.head.appendChild(link);
+    }
+    link.href = listing.logo_url;
+
+    let favicon = document.querySelector('link[rel="icon"]');
+    if (!favicon) {
+      favicon = document.createElement("link");
+      favicon.rel = "icon";
+      document.head.appendChild(favicon);
+    }
+    favicon.href = listing.logo_url;
+  }, [listing]);
+
   if (session === undefined) {
     return <p className="muted" style={{ padding: 20 }}>Carico…</p>;
   }
