@@ -39,10 +39,10 @@ body {
   content: "";
   position: fixed;
   inset: 0;
-  background-image: url("/logo-mark.png");
+  background-image: url("/logo.png");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: min(70vw, 380px) auto;
+  background-size: min(78vw, 460px) auto;
   opacity: 0.05;
   pointer-events: none;
   z-index: 0;
