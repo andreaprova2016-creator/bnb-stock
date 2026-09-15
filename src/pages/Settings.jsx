@@ -14,6 +14,7 @@ export default function Settings() {
   const [newProductStock, setNewProductStock] = useState(50);
   const [newProductThreshold, setNewProductThreshold] = useState(10);
   const [newProductMode, setNewProductMode] = useState("per_guest");
+  const [logoStatus, setLogoStatus] = useState("");
 
   async function load() {
     const { data: listings } = await supabase.from("listings").select("*").limit(1);
@@ -71,6 +72,37 @@ export default function Settings() {
     load();
   }
 
+  async function uploadLogo(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setLogoStatus("Carico…");
+
+    const { data: userData } = await supabase.auth.getUser();
+    const userId = userData.user.id;
+    const path = `${userId}/logo.png`;
+
+    const { error: uploadError } = await supabase.storage
+      .from("logos")
+      .upload(path, file, { upsert: true, contentType: file.type });
+
+    if (uploadError) {
+      setLogoStatus(uploadError.message);
+      return;
+    }
+
+    const { data: publicUrlData } = supabase.storage.from("logos").getPublicUrl(path);
+    // aggiunge un parametro casuale così il browser non mostra la versione in cache
+    const logoUrl = `${publicUrlData.publicUrl}?t=${Date.now()}`;
+
+    await supabase.from("listings").update({ logo_url: logoUrl }).eq("id", listing.id);
+    setLogoStatus("Logo aggiornato ✓");
+    window.location.reload();
+  }
+
+  async function handleLogout() {
+    await supabase.auth.signOut();
+  }
+
   async function handleEnablePush() {
     setPushStatus("Attivo…");
     try {
@@ -85,6 +117,16 @@ export default function Settings() {
 
   return (
     <div className="settings-page">
+      <section>
+        <h2>Il tuo logo</h2>
+        <p className="muted">
+          Carica un'immagine per usarla come sfondo tenue dell'app (formato quadrato o
+          rettangolare, PNG con sfondo trasparente se possibile).
+        </p>
+        <input type="file" accept="image/*" onChange={uploadLogo} />
+        {logoStatus && <p className="muted">{logoStatus}</p>}
+      </section>
+
       <section>
         <h2>Notifiche</h2>
         <p className="muted">
@@ -178,6 +220,11 @@ export default function Settings() {
             Aggiungi
           </button>
         </div>
+      </section>
+
+      <section>
+        <h2>Account</h2>
+        <button onClick={handleLogout}>Esci</button>
       </section>
     </div>
   );
