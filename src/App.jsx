@@ -8,10 +8,7 @@ export default function App() {
     <div className="app-shell">
       <header className="topbar">
         <span className="topbar-mark">BnB Stock</span>
-        <span className="topbar-right">
-          <img src="/logo-mark.png" alt="" className="topbar-logo" />
-          <span className="topbar-property">Casa Angelina</span>
-        </span>
+        <span className="topbar-property">Casa Angelina</span>
       </header>
 
       <main className="app-main">

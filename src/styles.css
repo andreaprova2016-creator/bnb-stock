@@ -41,8 +41,8 @@ body {
   inset: 0;
   background-image: url("/logo-mark.png");
   background-repeat: no-repeat;
-  background-position: center 40vh;
-  background-size: 340px auto;
+  background-position: center;
+  background-size: min(70vw, 380px) auto;
   opacity: 0.05;
   pointer-events: none;
   z-index: 0;
@@ -62,12 +62,10 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 20px;
+  padding: calc(env(safe-area-inset-top) + 14px) 20px 14px;
   border-bottom: 1px solid var(--border);
 }
 .topbar-mark { font-weight: 600; font-size: 1.05rem; }
-.topbar-right { display: flex; align-items: center; gap: 6px; }
-.topbar-logo { height: 20px; width: auto; display: block; opacity: 0.9; }
 .topbar-property { color: var(--navy); font-size: 0.85rem; font-weight: 500; }
 
 .app-main { padding: 16px 20px 24px; flex: 1; }
